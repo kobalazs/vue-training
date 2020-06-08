@@ -24,11 +24,11 @@ import { mapState } from 'vuex'
 export default {
   name: 'NavigationComponent',
   computed: mapState({
-    user: state => state.user
+    user: state => state.auth.user
   }),
   methods: {
     logout() {
-      this.$store.dispatch('logout')
+      this.$store.dispatch('auth/logout')
       this.$router.push('/')
     }
   }

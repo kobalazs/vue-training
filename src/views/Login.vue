@@ -25,16 +25,16 @@ export default {
   }),
   computed: {
     loading() {
-      return this.$store.state.loading
+      return this.$store.state.auth.loading
     },
     error() {
-      return this.$store.state.error
+      return this.$store.state.auth.error
     }
   },
   methods: {
     async login() {
-      await this.$store.dispatch('login', this.user)
-      if (this.$store.state.user) {
+      await this.$store.dispatch('auth/login', this.user)
+      if (this.$store.state.auth.user) {
           this.$router.push('/task-list')
       }
     }
