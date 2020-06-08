@@ -26,7 +26,7 @@
       <b-alert variant="warning" :show="!$v.repeatPassword.sameAsPassword">Should be same as password</b-alert>
     </b-form-group>
 
-    <b-button type="submit" variant="primary">Register</b-button>
+    <b-button type="submit" variant="primary" :disabled="loading"><b-spinner v-if="loading" small /> Register</b-button>
     <b-button type="reset" variant="danger" class="ml-1">Reset</b-button>
   </b-form>
 </template>
@@ -40,7 +40,8 @@ export default {
   name: 'Registration',
   data: () => ({
     user: new UserDto(),
-    repeatPassword: ''
+    repeatPassword: '',
+    loading: false
   }),
   validations: {
     user: {
@@ -67,11 +68,13 @@ export default {
         return
       }
       try {
+        this.loading = true
         await axios.post(`${process.env.VUE_APP_API_ENDPOINT}/user/register`, this.user)
         this.$router.push('login')
       } catch (err) {
         window.alert(err.response?.data?.error || err)
       }
+      this.loading = false
     },
     reset() {
       this.user = new UserDto()
