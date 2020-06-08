@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
 import UserDto from '../dtos/UserDto'
 
@@ -61,11 +62,16 @@ export default {
     }
   },
   methods: {
-    register() {
+    async register() {
       if (this.$v.$invalid) {
         return
       }
-      console.log('Register:', this.user)
+      try {
+        await axios.post(`${process.env.VUE_APP_API_ENDPOINT}/user/register`, this.user)
+        this.$router.push('login')
+      } catch (err) {
+        window.alert(err.response?.data?.error || err)
+      }
     },
     reset() {
       this.user = new UserDto()
