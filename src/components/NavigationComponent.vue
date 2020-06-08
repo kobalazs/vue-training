@@ -3,6 +3,7 @@
     <b-navbar-brand to="/">Vue Training</b-navbar-brand>
     <b-navbar-nav>
       <b-nav-item to="/">Home</b-nav-item>
+      <b-nav-item to="/task-list">Tasks</b-nav-item>
     </b-navbar-nav>
     <b-navbar-nav class="ml-auto" v-if="!user">
       <b-nav-item to="/registration">Registration</b-nav-item>
@@ -28,6 +29,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout')
+      this.$router.push('/')
     }
   }
 }

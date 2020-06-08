@@ -35,7 +35,7 @@ export default {
     async login() {
       await this.$store.dispatch('login', this.user)
       if (this.$store.state.user) {
-          this.$router.push('/')
+          this.$router.push('/task-list')
       }
     }
   }
