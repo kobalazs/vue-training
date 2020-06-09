@@ -1,4 +1,5 @@
 import http from '../helpers/HttpHelper'
+import TaskDto from '../../dtos/TaskDto'
 
 export default {
   namespaced: true,
@@ -24,7 +25,7 @@ export default {
       context.commit('setLoading', true)
       try {
         const response = await http(context).get('/task')
-        context.commit('setTasks', response.data)
+        context.commit('setTasks', response.data.map(task => new TaskDto(task)))
       } catch (err) {
         console.log(err)
         context.commit('setError', err.response?.data?.error || 'Server Error')
