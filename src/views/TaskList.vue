@@ -4,7 +4,12 @@
     <h1>Tasks</h1>
     <b-alert variant="danger" :show="!!error">{{ error }}</b-alert>
     <b-list-group>
-      <b-list-group-item v-for="task in tasks" :key="task.id">
+      <b-list-group-item v-for="task in tasks" :key="task.id" class="d-flex align-items-center">
+        <b-form-checkbox
+          v-model="task.is_done"
+          @change="modifyTask(task)"
+          :disabled="loading"
+        />
         <b-form-input
           v-model="task.name"
           @change="modifyTask(task)"
