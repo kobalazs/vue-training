@@ -41,6 +41,17 @@ export default {
         context.commit('setError', err.response?.data?.error || 'Server Error')
       }
       context.commit('setLoading', false)
+    },
+    async modify(context, task) {
+      context.commit('setLoading', true)
+      try {
+        await http(context).put(`/task/${task.id}`, task)
+        await context.dispatch('list')
+      } catch (err) {
+        console.log(err)
+        context.commit('setError', err.response?.data?.error || 'Server Error')
+      }
+      context.commit('setLoading', false)
     }
   }
 }
