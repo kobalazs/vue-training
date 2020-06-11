@@ -2,37 +2,41 @@
   <div>
     <h2>Calculator</h2>
     <b-button @click="increment" class="d-block mb-2">
-      Count is: {{ count }}, double is: {{ double }}
+      Count is: {{ state.count }}, double is: {{ state.double }}
     </b-button>
     <b-button @click="fibonacci">
-      First is: {{ first }}, second is: {{ second }}, sum is: {{ sum }}
+      First is: {{ state.first }}, second is: {{ state.second }}, sum is: {{ state.sum }}
     </b-button>
   </div>
 </template>
 
 <script>
+import { reactive, computed } from '@vue/composition-api'
+
 export default {
-  data: () => ({
-    count: 0,
-    first: 0,
-    second: 1
-  }),
-  computed: {
-    double() {
-      return this.count * 2
-    },
-    sum() {
-      return this.first + this.second
+  setup() {
+    const state = reactive({
+      count: 0,
+      first: 0,
+      second: 1,
+      double: computed(() => state.count * 2),
+      sum: computed(() => state.first + state.second)
+    })
+
+    function increment() {
+      state.count += 1
     }
-  },
-  methods: {
-    increment() {
-      this.count += 1
-    },
-    fibonacci() {
-      const temp = this.first + this.second
-      this.first = this.second
-      this.second = temp
+
+    function fibonacci() {
+      const temp = state.first + state.second
+      state.first = state.second
+      state.second = temp
+    }
+
+    return {
+      state,
+      increment,
+      fibonacci
     }
   }
 }
