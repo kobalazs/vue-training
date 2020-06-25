@@ -1,5 +1,5 @@
 export default {
-  arabicToRoman(number) {
+  arabicToRoman: function(number) {
     switch (number) {
       case 4:
         return 'IV'
